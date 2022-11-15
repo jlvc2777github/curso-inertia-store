@@ -26,6 +26,18 @@ const switchToTeam = (team) => {
 const logout = () => {
     Inertia.post(route('logout'));
 };
+
+// flash message
+    const visibleFlashContainer = ref(true)
+
+    const hideFlashMessage =()=>{
+        setTimeout(()=>{
+            visibleFlashContainer.value = false
+        },2000)
+
+        return true
+    }
+// flash message
 </script>
 
 <template>
@@ -304,6 +316,15 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
+                 <!-- Mensajes flash -->
+                 <transition>
+                    <div v-if="visibleFlashContainer">
+                        <div v-if="$page.props.flash.message && hideFlashMessage()"
+                        class="container my-2 bg-purple-300 text-purple-800 px-4 py-3 rounded shadow-sm">
+                            {{$page.props.flash.message }}
+                        </div>
+                    </div>
+                 </transition>
                 <slot />
             </main>
         </div>

@@ -30,7 +30,7 @@ class CategoryController extends Controller
     //     "slug"=>request('slug'),    
     //    ]);
         Category::create($request->validated());
-
+        return to_route('category.index')->with('message','Create category successfully');
      // dd($request->all());
    }
    public function edit(Category $category)
@@ -40,9 +40,12 @@ class CategoryController extends Controller
    public function update(Put $request,Category $category)
    {
      $category->update($request->validated());
+     return redirect()->route('category.index')->with('message','Updated category successfully');
+
    }
    public function destroy(Category $category)
    {
         $category->delete();
+        return to_route('category.index')->with('message','Delete category successfully');
    }
 }
