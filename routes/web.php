@@ -38,7 +38,7 @@ Route::middleware([
 
 //Route::inertia('indexconinertia','Dashboard/Post/index');
 
-Route::get('/',[PostController::class,'index']);
+//Route::get('/',[PostController::class,'index']);
 
 
 Route::group(['middleware'=>[
@@ -47,4 +47,5 @@ Route::group(['middleware'=>[
     'verified',   
 ]],function(){
     Route::resource('/category',CategoryController::class);
+    Route::resource('/post',PostController::class);
 });
