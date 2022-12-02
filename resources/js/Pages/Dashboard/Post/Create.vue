@@ -28,7 +28,11 @@
             </div>
                <div class="col-span-6">
                 <label for="ptext">Text</label>
-                <textarea class="rounded-md w-full border-gray-300" v-model="form.text">Text</textarea>
+                <!-- <textarea class="rounded-md w-full border-gray-300" 
+                v-model="form.text">Text</textarea> -->
+                <ckeditor :editor="editor.editor" v-model="form.text">
+                    Mostrar
+                </ckeditor>
                 <div v-if="errors.text">{{errors.text}}</div>
             </div>
             <div class="col-span-6">
@@ -44,10 +48,30 @@
                 </select>
                 <div v-if="errors.posted">{{errors.posted}}</div>
            </div>
-                <div class="col-span-6">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="pimg">File</label>
+                                <input  class="w-full" name="pimg" type="file" @input="form.image=$event.target.files[0]" >
+                                <div v-if="errors.image">{{errors.image}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <o-upload v-model="form.image">
+                <o-button tag="a" variant="primary">
+                    <o-icon icon="upload" />
+                    <span>Click to upload </span>
+                </o-button>
+            </o-upload>>
+
+            <div class="col-span-6">
                 <label for="pposted">Type</label>
                 <select v-model="form.type"  class="rounded-md w-full border-gray-300">
-                    <option value ="adverb">Adverb</option>
+                    <option value ="adverd">adverd</option>
                     <option value ="post">Post</option>
                     <option value ="course">Course</option>
                     <option value ="movie">Movie</option>
@@ -68,9 +92,19 @@ import FormSection from "@/Components/FormSection.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TextInput from "@/Components/TextInput.vue"
 
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+
 export default {
     components:{
-        AppLayout
+        AppLayout,
+        ClassicEditor
+    },
+    data(){
+        return{
+            editor:{
+                editor:ClassicEditor
+            }
+        }
     },
     props:{
         errors:Object,
@@ -84,7 +118,8 @@ export default {
             text:null,
             description:null,
             type:null,
-            category_id:null
+            category_id:null,
+            image:null
         })
 
         function submit(){
@@ -93,6 +128,7 @@ export default {
         return {
             form,
             submit
+                       
         }
     }
 }
